@@ -1,4 +1,4 @@
-package ListLab;
+package com.company.freatnor;
 
 import java.text.DecimalFormat;
 
