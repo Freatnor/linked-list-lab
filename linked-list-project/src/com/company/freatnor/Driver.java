@@ -14,8 +14,8 @@ public class Driver {
             "Gold", "Foley", "Freeman", "Willis", "Grant"};
 
     public static void main(String[] args) {
-        List<Student> studentArrayList = new ArrayList<>();
-        MyLinkedList<Student> studentLinkedList = new MyLinkedList<>();
+        List<Student> studentArrayList = new ArrayList<Student>();
+        MyLinkedList<Student> studentLinkedList = new MyLinkedList<Student>();
 
         generateStudents(20, studentArrayList);
         generateStudents(20, studentLinkedList);
@@ -27,10 +27,22 @@ public class Driver {
         //operation. Complete the action
 
         //Delete the first, if any, Student with the last name of "Smith"
+        Iterator<Student> iter2 = studentLinkedList.iterator();
+        while(iter2.hasNext()){
+            Student student = iter2.next();
+            if(student.getLastName().equals("Smith")){
+                iter2.remove();
+                break;
+            }
+        }
 
         //Change the name of the 3rd entry to "Joe Montana"
+        Student joe = studentArrayList.get(2);
+        joe.setFirstName("Joe");
+        joe.setLastName("Montana");
 
         //Remove the 10th element
+        studentLinkedList.remove(9);
     }
 
     //To generate the ArrayList

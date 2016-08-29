@@ -41,10 +41,15 @@ public class MyLinkedList<T> implements Iterable<T> {
     public void add(T obj) {
         //to-do
         Node<T> node = head;
-        while(node.getNext() != null){
-            node = node.getNext();
+        if(node == null){
+            head = new Node<T>(obj);
         }
-        node.setNext(new Node<T>(obj));
+        else {
+            while (node.next != null) {
+                node = node.getNext();
+            }
+            node.setNext(new Node<T>(obj));
+        }
         size++;
     }
 
@@ -73,6 +78,9 @@ public class MyLinkedList<T> implements Iterable<T> {
         }
     }
 
+    private void removeHead(){
+        head = head.getNext();
+    }
 
     @Override
     public Iterator<T> iterator() {
@@ -112,7 +120,7 @@ public class MyLinkedList<T> implements Iterable<T> {
             }
             node = next;
             next = node.getNext();
-            return node.getData();
+            return (T)node.getData();
         }
 
         @Override
@@ -121,11 +129,13 @@ public class MyLinkedList<T> implements Iterable<T> {
             if(node == null)
                 throw new IllegalStateException();
             if(previous == null){
-                head = next;
+                removeHead();
                 node = null;
             }
+            //possible issue if you remove, next, and then remove again
             else {
-
+                previous.setNext(next);
+                node = null;
             }
         }
 
