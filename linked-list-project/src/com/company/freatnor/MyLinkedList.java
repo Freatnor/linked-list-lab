@@ -52,8 +52,27 @@ public class MyLinkedList<T> implements Iterable<T> {
 
     public void add(int index, T obj) {
         //to-do
-        size++;
+        Node<T> newNode = new Node<T>(obj);
+        if(index < 0 || index > size -1){
+            return;
+        }
+        else if(index == 0){
+            newNode.setNext(head);
+            head = newNode;
+            size++;
+        }
+        //the case where the index is in the middle or end of the list
+        else {
+            Node<T> temp = head;
+            for (int i = 0; i < index; i++) {
+                temp = temp.getNext();
+            }
+            newNode.setNext(temp.getNext());
+            temp.setNext(newNode);
+            size++;
+        }
     }
+
 
     @Override
     public Iterator<T> iterator() {
@@ -65,15 +84,16 @@ public class MyLinkedList<T> implements Iterable<T> {
 
         private Node<T> node;
         private Node<T> previous;
+        private Node<T> next;
 
         public MyIterator(Node<T> node) {
             //to-do
-            this.node = node;
+            this.next = node;
         }
 
         @Override
         public boolean hasNext() {
-            if(node.getNext() != null){
+            if(next != null){
                 return true;
             }
             else {
@@ -87,15 +107,26 @@ public class MyLinkedList<T> implements Iterable<T> {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            previous = node;
-            node = node.getNext();
-            return previous.getData();
+            if(node != null) {
+                previous = node;
+            }
+            node = next;
+            next = node.getNext();
+            return node.getData();
         }
 
         @Override
         public void remove() {
             // TODO Auto-generated method stub
+            if(node == null)
+                throw new IllegalStateException();
+            if(previous == null){
+                head = next;
+                node = null;
+            }
+            else {
 
+            }
         }
 
     }
